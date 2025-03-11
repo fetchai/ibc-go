@@ -2,6 +2,9 @@ package transfer_test
 
 import (
 	"errors"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	types2 "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
+	"github.com/cosmos/ibc-go/v3/modules/core/exported"
 	"math"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -11,8 +14,6 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
-	ibcerrors "github.com/cosmos/ibc-go/v7/modules/core/errors"
-	"github.com/cosmos/ibc-go/v7/modules/core/exported"
 )
 
 func (suite *TransferTestSuite) TestOnChanOpenInit() {
@@ -33,29 +34,29 @@ func (suite *TransferTestSuite) TestOnChanOpenInit() {
 		},
 		{
 			"max channels reached", func() {
-				path.EndpointA.ChannelID = channeltypes.FormatChannelIdentifier(math.MaxUint32 + 1)
-			}, false,
+			path.EndpointA.ChannelID = channeltypes.FormatChannelIdentifier(math.MaxUint32 + 1)
+		}, false,
 		},
 		{
 			"invalid order - ORDERED", func() {
-				channel.Ordering = channeltypes.ORDERED
-			}, false,
+			channel.Ordering = channeltypes.ORDERED
+		}, false,
 		},
 		{
 			"invalid port ID", func() {
-				path.EndpointA.ChannelConfig.PortID = ibctesting.MockPort
-			}, false,
+			path.EndpointA.ChannelConfig.PortID = ibctesting.MockPort
+		}, false,
 		},
 		{
 			"invalid version", func() {
-				channel.Version = "version"
-			}, false,
+			channel.Version = "version"
+		}, false,
 		},
 		{
 			"capability already claimed", func() {
-				err := suite.chainA.GetSimApp().ScopedTransferKeeper.ClaimCapability(suite.chainA.GetContext(), chanCap, host.ChannelCapabilityPath(path.EndpointA.ChannelConfig.PortID, path.EndpointA.ChannelID))
-				suite.Require().NoError(err)
-			}, false,
+			err := suite.chainA.GetSimApp().ScopedTransferKeeper.ClaimCapability(suite.chainA.GetContext(), chanCap, host.ChannelCapabilityPath(path.EndpointA.ChannelConfig.PortID, path.EndpointA.ChannelID))
+			suite.Require().NoError(err)
+		}, false,
 		},
 	}
 
@@ -121,29 +122,29 @@ func (suite *TransferTestSuite) TestOnChanOpenTry() {
 		},
 		{
 			"max channels reached", func() {
-				path.EndpointA.ChannelID = channeltypes.FormatChannelIdentifier(math.MaxUint32 + 1)
-			}, false,
+			path.EndpointA.ChannelID = channeltypes.FormatChannelIdentifier(math.MaxUint32 + 1)
+		}, false,
 		},
 		{
 			"capability already claimed in INIT should pass", func() {
-				err := suite.chainA.GetSimApp().ScopedTransferKeeper.ClaimCapability(suite.chainA.GetContext(), chanCap, host.ChannelCapabilityPath(path.EndpointA.ChannelConfig.PortID, path.EndpointA.ChannelID))
-				suite.Require().NoError(err)
-			}, true,
+			err := suite.chainA.GetSimApp().ScopedTransferKeeper.ClaimCapability(suite.chainA.GetContext(), chanCap, host.ChannelCapabilityPath(path.EndpointA.ChannelConfig.PortID, path.EndpointA.ChannelID))
+			suite.Require().NoError(err)
+		}, true,
 		},
 		{
 			"invalid order - ORDERED", func() {
-				channel.Ordering = channeltypes.ORDERED
-			}, false,
+			channel.Ordering = channeltypes.ORDERED
+		}, false,
 		},
 		{
 			"invalid port ID", func() {
-				path.EndpointA.ChannelConfig.PortID = ibctesting.MockPort
-			}, false,
+			path.EndpointA.ChannelConfig.PortID = ibctesting.MockPort
+		}, false,
 		},
 		{
 			"invalid counterparty version", func() {
-				counterpartyVersion = "version"
-			}, false,
+			counterpartyVersion = "version"
+		}, false,
 		},
 	}
 
@@ -208,8 +209,8 @@ func (suite *TransferTestSuite) TestOnChanOpenAck() {
 		},
 		{
 			"invalid counterparty version", func() {
-				counterpartyVersion = "version"
-			}, false,
+			counterpartyVersion = "version"
+		}, false,
 		},
 	}
 
@@ -264,14 +265,14 @@ func (suite *TransferTestSuite) TestOnRecvPacket() {
 				packet.Data = []byte("invalid data")
 
 			},
-			channeltypes.NewErrorAcknowledgement(ibcerrors.ErrInvalidType),
+			types2.NewErrorAcknowledgement(sdkerrors.ErrInvalidType),
 		},
 		{
 			"failure: receive disabled",
 			func() {
 				suite.chainB.GetSimApp().TransferKeeper.SetParams(suite.chainB.GetContext(), types.Params{ReceiveEnabled: false})
 			},
-			channeltypes.NewErrorAcknowledgement(types.ErrReceiveDisabled),
+			types2.NewErrorAcknowledgement(types.ErrReceiveDisabled),
 		},
 	}
 
@@ -289,7 +290,6 @@ func (suite *TransferTestSuite) TestOnRecvPacket() {
 				coin.Amount.String(),
 				suite.chainA.SenderAccount.GetAddress().String(),
 				suite.chainB.SenderAccount.GetAddress().String(),
-				"",
 			)
 
 			seq := uint64(1)
@@ -330,7 +330,7 @@ func (suite *TransferTestSuite) TestOnAcknowledgePacket() {
 		{
 			"success: refund coins",
 			func() {
-				ack = channeltypes.NewErrorAcknowledgement(ibcerrors.ErrInsufficientFunds).Acknowledgement()
+				ack = types2.NewErrorAcknowledgement(sdkerrors.ErrInsufficientFunds).Acknowledgement()
 			},
 			nil,
 			true,
@@ -338,7 +338,7 @@ func (suite *TransferTestSuite) TestOnAcknowledgePacket() {
 		{
 			"cannot refund ack on non-existent channel",
 			func() {
-				ack = channeltypes.NewErrorAcknowledgement(ibcerrors.ErrInsufficientFunds).Acknowledgement()
+				ack = types2.NewErrorAcknowledgement(sdkerrors.ErrInsufficientFunds).Acknowledgement()
 
 				packet.SourceChannel = "channel-100"
 			},
@@ -358,13 +358,13 @@ func (suite *TransferTestSuite) TestOnAcknowledgePacket() {
 			func() {
 				ack = []byte("invalid ack")
 			},
-			ibcerrors.ErrUnknownRequest,
+			sdkerrors.ErrUnknownRequest,
 			false,
 		},
 		{
 			"cannot refund already acknowledged packet",
 			func() {
-				ack = channeltypes.NewErrorAcknowledgement(ibcerrors.ErrInsufficientFunds).Acknowledgement()
+				ack = types2.NewErrorAcknowledgement(sdkerrors.ErrInsufficientFunds).Acknowledgement()
 
 				cbs, ok := suite.chainA.App.GetIBCKeeper().PortKeeper.Router.GetRoute(ibctesting.TransferPort)
 				suite.Require().True(ok)
@@ -393,7 +393,6 @@ func (suite *TransferTestSuite) TestOnAcknowledgePacket() {
 				suite.chainB.SenderAccount.GetAddress().String(),
 				timeoutHeight,
 				0,
-				"",
 			)
 			res, err := suite.chainA.SendMsgs(msg)
 			suite.Require().NoError(err) // message committed
@@ -488,7 +487,6 @@ func (suite *TransferTestSuite) TestOnTimeoutPacket() {
 				suite.chainB.SenderAccount.GetAddress().String(),
 				timeoutHeight,
 				0,
-				"",
 			)
 			res, err := suite.chainA.SendMsgs(msg)
 			suite.Require().NoError(err) // message committed
