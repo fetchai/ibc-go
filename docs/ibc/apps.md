@@ -369,7 +369,7 @@ example above. [ICS 04](https://github.com/cosmos/ibc/blob/master/spec/core/ics-
 specifies a recommended format for acknowledgements. This acknowledgement type can be imported from
 [channel types](https://github.com/cosmos/ibc-go/tree/main/modules/core/04-channel/types).
 
-While modules may choose arbitrary acknowledgement structs, a default acknowledgement types is provided by IBC [here](https://github.com/cosmos/ibc-go/blob/main/proto/ibc/core/channel/v1/channel.proto):
+While modules may choose arbitrary acknowledgement structs, a default acknowledgement types is provided by IBC [here](https://github.com/cosmos/ibc-go/blob/v3.1.0/proto/ibc/core/channel/v1/channel.proto):
 
 ```proto
 // Acknowledgement is the recommended acknowledgement format to be used by
@@ -464,14 +464,14 @@ which implements everything discussed above.
 Here are the useful parts of the module to look at:
 
 [Binding to transfer
-port](https://github.com/cosmos/ibc-go/blob/main/modules/apps/transfer/keeper/genesis.go)
+port](https://github.com/cosmos/ibc-go/blob/v3.1.0/modules/apps/transfer/keeper/genesis.go)
 
 [Sending transfer
-packets](https://github.com/cosmos/ibc-go/blob/main/modules/apps/transfer/keeper/relay.go)
+packets](https://github.com/cosmos/ibc-go/blob/v3.1.0/modules/apps/transfer/keeper/relay.go)
 
 [Implementing IBC
-callbacks](https://github.com/cosmos/ibc-go/blob/main/modules/apps/transfer/ibc_module.go)
+callbacks](https://github.com/cosmos/ibc-go/blob/v3.1.0/modules/apps/transfer/ibc_module.go)
 
 ## Next {hide}
 
-Learn about [building modules](https://github.com/cosmos/cosmos-sdk/blob/master/docs/building-modules/intro.md) {hide}
+Learn about [building modules](https://github.com/cosmos/cosmos-sdk/blob/v0.45.4/docs/building-modules/intro.md) {hide}
