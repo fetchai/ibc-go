@@ -265,14 +265,14 @@ func (suite *TransferTestSuite) TestOnRecvPacket() {
 				packet.Data = []byte("invalid data")
 
 			},
-			types2.NewErrorAcknowledgement(sdkerrors.ErrInvalidType),
+			channeltypes.NewErrorAcknowledgement("cannot unmarshal ICS-20 transfer packet data"),
 		},
 		{
 			"failure: receive disabled",
 			func() {
 				suite.chainB.GetSimApp().TransferKeeper.SetParams(suite.chainB.GetContext(), types.Params{ReceiveEnabled: false})
 			},
-			types2.NewErrorAcknowledgement(types.ErrReceiveDisabled),
+			types.NewErrorAcknowledgement(types.ErrReceiveDisabled),
 		},
 	}
 
