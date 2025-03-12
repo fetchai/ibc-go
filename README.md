@@ -69,4 +69,4 @@ For an overview of upcoming changes to ibc-go take a look at the [roadmap](./doc
 
 - [IBC Website](https://ibcprotocol.org/)
 - [IBC Specification](https://github.com/cosmos/ibc)
-- [Documentation](https://ibc.cosmos.network/main/ibc/overview.html)
+- [Documentation](https://ibc.cosmos.network/main/ibc/overview.html)<!-- markdown-link-check-disable-line -->
