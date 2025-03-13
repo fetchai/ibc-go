@@ -41,7 +41,7 @@ Let's assume that the planned release schedule looks like the following:
 
 ### Interchain security
 
-- Testnet testing of [V1](https://github.com/cosmos/gaia/blob/main/docs/interchain-security.md#v1---full-validator-set).
+- Testnet testing of [V1](https://github.com/cosmos/gaia/blob/v7.1.0/docs/interchain-security.md#v1---full-validator-set).
 
 ### Backlog issues
 

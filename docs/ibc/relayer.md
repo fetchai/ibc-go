@@ -7,7 +7,7 @@ order: 6
 ## Pre-requisites Readings
 
 - [IBC Overview](./overview.md) {prereq}
-- [Events](https://github.com/cosmos/cosmos-sdk/blob/master/docs/core/events.md) {prereq}
+- [Events](https://github.com/cosmos/cosmos-sdk/blob/v0.45.4/docs/core/events.md) {prereq}
 
 ## Events
 
@@ -43,4 +43,4 @@ piece of information needed to relay a packet.
 ## Example Implementations
 
 - [Golang Relayer](https://github.com/iqlusioninc/relayer)
-- [Hermes](https://github.com/informalsystems/ibc-rs/tree/master/relayer)
+- [Hermes](https://github.com/informalsystems/ibc-rs/tree/v0.15.0/relayer)

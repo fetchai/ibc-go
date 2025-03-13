@@ -3,7 +3,7 @@
   <a href="https://github.com/cosmos/ibc-go/releases/latest">
     <img alt="Version" src="https://img.shields.io/github/tag/cosmos/ibc-go.svg" />
   </a>
-  <a href="https://github.com/cosmos/ibc-go/blob/main/LICENSE">
+  <a href="https://github.com/cosmos/ibc-go/blob/v3.1.0/LICENSE">
     <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/cosmos/ibc-go.svg" />
   </a>
   <a href="https://pkg.go.dev/github.com/cosmos/ibc-go?tab=doc">
@@ -69,4 +69,4 @@ For an overview of upcoming changes to ibc-go take a look at the [roadmap](./doc
 
 - [IBC Website](https://ibcprotocol.org/)
 - [IBC Specification](https://github.com/cosmos/ibc)
-- [Documentation](https://ibc.cosmos.network/main/ibc/overview.html)
+- [Documentation](https://ibc.cosmos.network/main/ibc/overview.html)<!-- markdown-link-check-disable-line -->

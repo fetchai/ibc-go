@@ -36,7 +36,7 @@ and executed automatically.
 
 
 The easiest way to run Apalache is by 
-[using a Docker image](https://github.com/informalsystems/apalache/blob/master/docs/manual.md#useDocker); 
+[using a Docker image](https://github.com/apalache-mc/apalache/blob/v0.7.2/docs/manual.md#useDocker); 
 to run Jsonatr you need to locally clone the repository, and then, 
 after building it, add the `target/debug` directory into your `PATH`. 
 
